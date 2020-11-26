@@ -1,0 +1,29 @@
+stages:
+  - build
+  - deploy
+
+default:
+  tags: [ shell ] # need shell executor to build docker image
+  # before_script:
+  #   - apt-get update && apt-get -y install build-essential docker.io
+  #   - nohup dockerd &
+
+valeevgroup/ubuntu:18.04:
+  stage: build
+  # variables:
+  #    DEBIAN_FRONTEND : noninteractive
+  script:
+    - make valeevgroup/ubuntu:18.04
+
+valeevgroup/ubuntu:20.04:
+  stage: build
+  script:
+    - make valeevgroup/ubuntu:20.04
+    - make valeevgroup/ubuntu latest=20.04
+
+# build/deploy:
+#   stage: build
+#   only:
+#     refs: [ master ] # only master branch
+#   script:
+#     - make push/latest
